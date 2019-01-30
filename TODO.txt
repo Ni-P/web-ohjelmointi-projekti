@@ -1,0 +1,13 @@
+build front end
+    build html
+    make views
+    tailor css
+
+build back end
+    set up routes
+    create db and schemas
+    set db queries
+    setup passport and auth code
+
+test app
+deploy app
