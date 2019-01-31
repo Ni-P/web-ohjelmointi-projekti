@@ -1,11 +1,57 @@
 body {
   /*padding: 0;*/
   /*margin: 0;*/
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 20px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-bottom: 200px;
 }
 
-nav {
-  width: 60%;
+nav,
+footer {
+  width: 100%;
+  margin: auto;
+}
+.cottages-content {
+  width: 90%;
   margin: auto;
 }
 
+nav {
+  min-height: 80px;
+}
+
+.brand-logo, .sidenav-trigger {
+  font-size: 3rem;
+}
+
+@media only screen and (min-width: 993px ){
+  body {
+    font-size: 14px;
+  }
+  nav,
+  footer,
+  .cottages-content{
+    width: 70%;
+  }
+  nav {
+    min-height: 60px;
+  }
+  footer {
+    /*position: fixed;*/
+    bottom: 0;
+    margin: auto;
+    text-align: center;
+  }
+}
+
+#mobile a {
+  font-size: 2rem;
+}
+#mobile li {
+  margin-bottom: 10px;
+}
+
+footer {
+  /*position: fixed;*/
+  bottom: 0;
+  margin: auto;
+}
