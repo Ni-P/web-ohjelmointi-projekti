@@ -1,11 +1,20 @@
 build front end
     build html
     make views
+        landing
+        cottages
+        login
+        register
+        reservations
+        new cottage
+        new reservation
     tailor css
 
 build back end
     set up routes
-    create db and schemas
+        index
+        get cottages
+        create db and schemas
     set db queries
     setup passport and auth code
 
