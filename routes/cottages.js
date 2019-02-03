@@ -16,7 +16,11 @@ router.get('/cottages', function(req, res, next) {
     // res.render('cottages/cottages', { title: ' | Cottages'});
 });
 
-router.post('/', function (req, res, next) {
+router.get('/cottages/new',function(req,res,next){
+    res.render('cottages/newCottage', {title: ' | Add a new cottage'});
+});
+
+router.post('/cottages/new', function (req, res, next) {
 
     const newCottage = {
         name: "Cottage 3",
@@ -26,6 +30,10 @@ router.post('/', function (req, res, next) {
         image: "5817984136_a85f4ab07b_b.jpg",
         description: "Number 3"
     };
+
+    console.log(req.body);
+    res.send(req.body);
+    return;
 
     Cottage.create(newCottage, function(err, newInsert){
         if(err){
