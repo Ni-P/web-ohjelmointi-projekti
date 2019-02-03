@@ -41,6 +41,14 @@ nav {
     margin: auto;
     text-align: center;
   }
+  .flash-content{
+    margin: auto;
+    width: 70%;
+  }
+  .form-content{
+    margin: auto;
+    width: 70%;
+  }
 }
 
 #mobile a {

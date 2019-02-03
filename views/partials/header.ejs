@@ -2,26 +2,52 @@
 <html lang="en">
 <head>
     <title><%= title %></title>
-    <link rel="stylesheet" href="./materialize/css/materialize.css">
-    <script src="./materialize/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="/materialize/css/materialize.css">
+    <script src="/materialize/js/materialize.min.js"></script>
     <link rel='stylesheet' href='/stylesheets/style.css'>
 </head>
 <body>
     <nav>
         <div class="nav-wrapper green darken-3">
-            <a href="#" class="brand-logo">Logo</a>
+            <a href="/" class="brand-logo">Logo</a>
             <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <% if(currentUser && currentUser.admin){ %>
+                <li><a href="/users">Users</a></li>
+                <% } %>
                 <li><a href="/cottages">Cottages</a></li>
                 <li><a href="/about">About</a></li>
-                <li><a href="/login">Login</a></li>
+                <% if(!currentUser){ %>
+                <li><a href="/users/login">Login</a></li>
+                <li><a href="/users/register">Register</a></li>
+                <% } else { %>
+                <li><a href='/reservations'><%= currentUser.username %></a></li>
+                <li><a href="/users/logout">Logout</a></li>
+                <% } %>
             </ul>
         </div>
     </nav>
     <ul class="sidenav" id="mobile">
         <li><a href="/cottages">Cottages</a></li>
         <li><a href="/about">About</a></li>
-        <li><a href="/login">Login</a></li>
+        <li><a href="/users/login">Login</a></li>
     </ul>
-
+    <% if(error && error.length > 0) { %>
+    <div class="row flash-content">
+        <div class="col s12">
+            <div class="card-panel red">
+                <span class="white-text"><%= error %></span>
+            </div>
+        </div>
+    </div>
+    <% } %>
+    <% if(success && success.length > 0) { %>
+        <div class="row flash-content">
+            <div class="col s12">
+                <div class="card-panel green">
+                    <span class="white-text"><%= success %></span>
+                </div>
+            </div>
+        </div>
+    <% } %>
 
