@@ -3,24 +3,41 @@
 
 <div class="cottages-content">
     <div class="row">
-        <% results.forEach(function(cottage){ %>
+        <% results.forEach(function(cottage) { %>
         <div class="col s12 l6">
             <div class="card">
                 <div class="card-image">
-                    <img src="images/<%= cottage.image %>">
+                    <img src="images/<%= cottage.image %>" alt="cottage image">
                     <span class="card-title"><%= cottage.name %></span>
                 </div>
                 <div class="card-content">
                     <p><%= cottage.location %></p>
                     <p><%= cottage.description %></p>
-                    <p>Price <%= cottage.price %> per day</p>
                 </div>
                 <div class="card-action">
-                    <a href="/reservations/<%= cottage.id %>/new">Reserve</a>
+                    <div class="row">
+                        <div class="col s6 left-align">
+                            <span>Price <%= cottage.price %> per day</span>
+                        </div>
+                        <div class="col s6 right-align">
+                            <a class="btn white-text green darken-3" href="/reservations/<%= cottage.id %>/new">Reserve</a>
+                        </div>
+                    </div>
                 </div>
+                <% if(currentUser && currentUser.admin) { %>
+                <div class="card-action right-align">
+                        <a class="btn red darken-1" href="/cottages/<%= cottage.id %>/delete">Delete</a>
+                </div>
+                <% } %>
             </div>
         </div>
-        <% }); %>
+        <% }); if(currentUser && currentUser.admin) { %>
+            <div class="col s12 l6">
+                <div class="card-panel center-align">
+                    <a class="btn green darken-3" href="/cottages/new">NEW</a>
+                </div>
+            </div>
+        <% } %>
     </div>
 </div>
 

@@ -2,9 +2,9 @@ build front end
     build html
     make views
         landing
-        cottages
-        login
-        register
+        cottages OK
+        login OK
+        register OK
         reservations
         new cottage
         new reservation

@@ -1,0 +1,16 @@
+<% include ../partials/header.ejs %>
+
+<div class="body-content">
+    <ul class="collection">
+        <%= console.log(typeof (reservations)) %>
+        <% reservations.forEach((cottage)=>{%>
+        <li class="collection-item avatar">
+            <img src="images/<%= cottage.image %>" alt="cottage image" class="circle">
+            <span class="title"><%= cottage.name %></span>
+            <p><%= cottage.date %></p>
+        </li>
+        <% }); %>
+    </ul>
+</div>
+
+<% include ../partials/footer.ejs %>

@@ -1,11 +1,17 @@
 const mongoose = require("mongoose");
 var passportLocalMongoose = require('passport-local-mongoose');
 var { Schema } = mongoose;
+const { ObjectId } = Schema;
 
 var UserSchema = new Schema({
     username: String,
     password: String,
-    admin: Boolean
+    admin: Boolean,
+    reservations: [{
+            type: ObjectId,
+            ref: "reservations"
+        }
+    ]
 });
 
 UserSchema.plugin(passportLocalMongoose);

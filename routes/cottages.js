@@ -6,12 +6,11 @@ const middleware = require("../middleware");
 
 /* GET home page. */
 router.get('/cottages', function(req, res, next) {
-
-    Cottage.find({}, function(err, results){
+    Cottage.find({}, function(err, results) {
         if(err){
             console.error(err);
         } else {
-            res.header("X-Content-Type-Options", "nosniff");
+            // res.header("X-Content-Type-Options", "nosniff");
             res.render('cottages/cottages', { results, title: ' | Cottages'});
         }
     });
@@ -19,12 +18,11 @@ router.get('/cottages', function(req, res, next) {
     // res.render('cottages/cottages', { title: ' | Cottages'});
 });
 
-router.get('/cottages/new',function(req,res,next){
+router.get('/cottages/new', middleware.isLoggedAsAdmin, function(req, res) {
     res.render('cottages/newCottage', {title: ' | Add a new cottage'});
 });
 
-router.post('/cottages/new', middleware.isLoggedIn, function (req, res) {
-
+router.post('/cottages/new', middleware.isLoggedAsAdmin, function (req, res) {
     const newCottage = {
         name: req.body.name,
         location: req.body.location,
@@ -34,15 +32,12 @@ router.post('/cottages/new', middleware.isLoggedIn, function (req, res) {
         description: req.body.description
     };
 
-    // console.log(req.body);
-    // res.send(req.body);
-    // return;
-
     Cottage.create(newCottage, function(err, newInsert){
         if(err){
             console.error(err);
         } else {
-            res.send("inserted: "+newInsert.toString());
+            req.flash("success", "New cottage added succesfully.");
+            res.redirect("/cottages");
         }
     });
 

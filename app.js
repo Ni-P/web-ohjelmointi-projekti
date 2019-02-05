@@ -21,8 +21,6 @@ const reservationsRouter = require('./routes/reservations');
 
 const keys = require("./config/keys");
 
-
-
 const app = express();
 
 // mongodb setup
@@ -72,11 +70,8 @@ app.use('/users', usersRouter);
 app.use(cottagesRouter);
 app.use(aboutRouter);
 app.use('/reservations', reservationsRouter);
-// app.use(loginRouter);
 
-// app.get('/cottages', function(req, res, next) {
-//   res.render('cottages/cottages',{ title: ' | Cottages'});
-// });
+// --------------------------------------------------------------
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

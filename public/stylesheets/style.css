@@ -49,6 +49,10 @@ nav {
     margin: auto;
     width: 70%;
   }
+  .body-content{
+    margin: auto;
+    width: 70%;
+  }
 }
 
 #mobile a {
