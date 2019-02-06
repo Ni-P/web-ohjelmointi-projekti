@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
+const { ObjectId } = Schema;
 
 const cottageSchema = new Schema({
     name: String,
     location: String,
     reserved: {
         id: {
-            type: mongoose.Schema.Types.ObjectId,
+            type: ObjectId,
             ref: "User"
         },
         username: String
@@ -16,4 +17,4 @@ const cottageSchema = new Schema({
     description: String
 });
 
-module.exports = mongoose.model("cottages", cottageSchema);
+module.exports = mongoose.model("Cottage", cottageSchema);

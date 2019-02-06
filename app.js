@@ -57,7 +57,6 @@ app.use(function(req, res, next){
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
     next();
-
 });
 app.use(logger('dev'));
 app.use(express.json());
@@ -67,7 +66,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use(cottagesRouter);
+app.use("/cottages", cottagesRouter);
 app.use(aboutRouter);
 app.use('/reservations', reservationsRouter);
 

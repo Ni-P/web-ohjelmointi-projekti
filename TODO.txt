@@ -5,18 +5,19 @@ build front end
         cottages OK
         login OK
         register OK
-        reservations
-        new cottage
-        new reservation
-    tailor css
+        reservations OK
+        new cottage Ok FIX image url
+        new reservation OK
+    tailor css Ok
 
 build back end
     set up routes
         index
-        get cottages
-        create db and schemas
-    set db queries
-    setup passport and auth code
+        get cottages OK
+        create db and schemas OK
+    set db queries OK
+    setup passport and auth code OK
+    make id checks to prevent actions from wrong users
 
 test app
 deploy app

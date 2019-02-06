@@ -9,7 +9,7 @@ var UserSchema = new Schema({
     admin: Boolean,
     reservations: [{
             type: ObjectId,
-            ref: "reservations"
+            ref: "Reservation"
         }
     ]
 });

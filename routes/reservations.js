@@ -3,33 +3,53 @@ const router = express.Router();
 
 const Reservation = require('../models/Reservation');
 const Cottage = require("../models/Cottage");
-var User = require("../models/User");
+const User = require("../models/User");
 
 const middleware = require("../middleware");
 
 router.get('/', middleware.isLoggedIn, function (req, res) {
-
-    User.findById(req.user._id,'reservations',function (err, user) {
-        if(err){
+    Reservation.find({user: req.user._id},"date cottage",function (err, reservations) {
+        if(err) {
             console.error(err);
             res.redirect('/');
-        } else { // TODO: populate cottages
-            User.populate(user,"reservations", function (err,reservations) {
-                if(err){
+        } else {
+            Reservation.populate(reservations,"cottage",function (err, populated) {
+                if (err) {
                     console.error(err);
                     res.redirect('/');
                 } else {
-                    console.log(reservations.reservations);
-                    res.render('reservations/reservations', {reservations: reservations.reservations, title: " | Reservations" });
+                    // console.log(populated.toString());
+                    res.render('reservations/reservations',
+                        {   reservations: populated,
+                            title: " | Reservations"
+                        });
                 }
-            })
+            });
         }
-    })
+    });
 
 });
 
 router.get('/:id/new', middleware.isLoggedIn, function (req, res) {
-   res.render('reservations/newReservation', {title: " | Reservation"});
+    Reservation.find({cottage: req.params.id},"date",function (err, dates) {
+        if(err) {
+            console.error(err);
+        } else {
+            // console.log(dates.toString());
+            Cottage.findById(req.params.id,function (err, cottage) {
+                if(err) {
+                    console.error(err);
+                } else {
+                    let dateArr = [];
+                    dates.forEach((date)=>{dateArr.push(date.date)});
+                    // console.log(dateArr);
+                    res.locals.dates = dateArr;
+                    res.locals.cottage = cottage;
+                    res.render('reservations/new', {title: " | Reservation"});
+                }
+            });
+        }
+    });
 });
 
 router.post('/:id/new', middleware.isLoggedIn, function (req, res) {
@@ -60,6 +80,80 @@ router.post('/:id/new', middleware.isLoggedIn, function (req, res) {
         }
     });
     // res.redirect(`/${req.params.id}/new`);
+});
+
+router.get('/:id/delete', middleware.isLoggedIn, function (req, res) {
+    Reservation.findById(req.params.id, function (err, reservation) {
+        if(err){
+            console.error(err);
+            res.redirect('/');
+        } else {
+            Reservation.populate(reservation,"cottage",function (err, populated) {
+                if(err){
+                    console.error(err);
+                    res.redirect('/');
+                } else {
+                    res.render('reservations/delete', {
+                        title: ' | Cancel your reservation',
+                        reservation: populated
+                    });
+                }
+            })
+
+        }
+    });
+
+});
+
+router.post('/:id/delete', middleware.isLoggedIn, function (req, res) {
+    User.findById(req.user.id,"reservations",function (err, user) {
+        if(err){
+            console.error(err);
+            res.redirect('/');
+        } else {
+
+            if(user.reservations.includes(req.params.id)) console.log('FOUND it');
+            user.reservations.pop(req.params.id);
+
+            user.save(function (err) {
+                if(err){
+                    console.error(err);
+                    res.redirect('/');
+                } else {
+                    Reservation.findByIdAndDelete(req.params.id,function (err) {
+                        if(err){
+                            console.error(err);
+                            res.redirect('/');
+                        } else {
+                            req.flash('success',"Reservation cancelled succesfully");
+                            res.redirect('/reservations');
+                        }
+                    });
+                }
+            });
+        }
+    });
+});
+
+router.get('/:id/show', middleware.isLoggedIn,function (req, res) {
+    Reservation.findById(req.params.id, function (err, reservation) {
+        if(err){
+            console.error(err);
+            res.redirect('/');
+        } else {
+            Reservation.populate(reservation,"cottage",function (err, populated) {
+                if(err){
+                    console.error(err);
+                    res.redirect('/');
+                } else {
+                    res.render('reservations/show', {
+                        title: ' | Your reservation',
+                        reservation: populated
+                    });
+                }
+            });
+        }
+    });
 });
 
 module.exports = router;
