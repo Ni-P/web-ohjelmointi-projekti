@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const LocalStrategy = require("passport-local");
-var User = require("./models/user");
+const User = require("./models/user");
 const flash = require('connect-flash');
 
 const indexRouter = require('./routes/index');

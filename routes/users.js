@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const passport = require("passport");
 const middleware = require("../middleware");
-var User = require("../models/User");
+const User = require("../models/User");
+const Reservation = require("../models/Reservation");
 
 router.get('/', middleware.isLoggedAsAdmin, function(req, res) {
     User.find({}, function (err, users) {
@@ -27,15 +28,82 @@ router.get('/:id/show', middleware.isLoggedAsAdmin, function (req,res) {
 });
 
 router.get('/:id/edit', middleware.isLoggedAsAdmin, function (req, res) {
-    res.send('WIP');
+    User.findById(req.params.id, function (err, user) {
+        if(err){
+            console.error(err);
+            req.flash('error', 'Could not get user details');
+        } else {
+            res.render('users/edit', {title: ' | Edit User', user});
+        }
+    });
+});
+
+router.post('/:id/edit', middleware.isLoggedAsAdmin, function (req, res) {
+    let updates = {
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        address: req.body.address,
+        postalCode: req.body.postalcode,
+        phone: req.body.phone,
+        email: req.body.email,
+    };
+    User.findByIdAndUpdate(req.params.id, updates, {new: true}, function (err, user) {
+        if(err){
+            console.error(err);
+            req.flash('error', 'Could not update user details');
+        } else {
+            res.render('users/show', {title: ' | Edit User', user});
+        }
+    });
 });
 
 router.get('/:id/delete', middleware.isLoggedAsAdmin, function (req, res) {
-    res.send('WIP');
+    Reservation.find({user: req.params.id}, function (err, reservations) {
+        if(err){
+            console.error(err);
+            req.flash('error','Could not get users reservations. Try canceling them first.');
+            res.redirect(`/${req.param.id}/show`);
+        } else {
+            Reservation.populate(reservations,"cottage",function (err, populated) {
+                if(err){
+                    req.flash('error','Could not get reservation details.');
+                    // res.redirect(`/${req.param.id}/show`);
+                } else {
+                    res.render('users/delete', {title: ' | Delete User', reservations, userId: req.params.id});
+                }
+            });
+        }
+    });
 });
 
 router.post('/:id/delete', middleware.isLoggedAsAdmin, function (req, res) {
-    res.send('WIP');
+    User.findById(req.params.id,function (err,user) {
+        if(err){
+            console.log(err);
+            req.flash('error',"Could not find user to delete.");
+        } else {
+            if(user.admin) {
+                res.redirect('https://cdn.head-fi.org/a/9891211.png'); // HEH!
+            } else {
+                if (user.reservations && user.reservations.length > 0) {
+                    Reservation.deleteMany({user: user.id}, function (err) {
+                        if (err) {
+                            console.error(err);
+                        }
+                    });
+                }
+                User.findByIdAndRemove(user.id, function (err) {
+                    if (err) {
+                        req.flash('error', "Could not remove user.");
+                        res.redirect(`/users/${user.id}/delete`);
+                    } else {
+                        req.flash('success', "User removed successfully.");
+                        res.redirect('/users');
+                    }
+                });
+            }
+        }
+    });
 });
 
 router.get('/register', function (req, res) {
@@ -46,12 +114,12 @@ router.post('/register', function (req, res) {
     const userDetails = {
         username: req.body.username,
         admin: false,
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        address: req.body.address,
-        postalCode: req.body.postalcode,
-        phone: req.body.phone,
-        email: req.body.email,
+        firstname: req.body.firstname || "",
+        lastname: req.body.lastname || "",
+        address: req.body.address || "",
+        postalCode: req.body.postalcode || null,
+        phone: req.body.phone || null,
+        email: req.body.email || "",
     };
     let newUser =  new User(userDetails);
     User.register(newUser, req.body.password, function (err) {
@@ -63,17 +131,17 @@ router.post('/register', function (req, res) {
             }
             console.error(err);
             // req.flash("error", "Failed to register");
-            return res.render('users/register', {title: "Register", error: req.flash("error")});
+            return res.render('users/register', {title: " | Register", error: req.flash("error")});
         }
         passport.authenticate('Local')(req,res,function(){
-            req.flash("success", "Thank you for registering.");
-            res.redirect('/cottages');
+            req.flash("success", "Thank you for registering. Please login with you new account.");
+            res.redirect('/users/login');
         });
     });
 });
 
 router.get('/login', function (req, res) {
-    res.render('users/login',{title: "Login"});
+    res.render('users/login',{title: " | Login"});
 });
 
 router.post('/login', passport.authenticate('local',

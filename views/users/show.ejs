@@ -9,10 +9,14 @@
         <li class="collection-item">Phone number: <%= user.phone %></li>
         <li class="collection-item">Email: <%= user.email %></li>
     </ul>
+    <a class="btn green darken-2" href="/users">Back</a>
     <a class="btn orange darken-2" href="/users/<%= user.id %>/edit">Edit User</a>
+    <% if(!currentUser.admin) { %>
     <a class="btn red darken-2" href="/users/<%= user.id %>/delete">Delete User</a>
-    <br>
-    <br>
+    <% } else { %>
+        <a class="btn red darken-2 disabled" href="/users/<%= user.id %>/delete">Can not delete admin acounts</a>
+    <% } %>
 </div>
+<br>
 
 <% include ../partials/footer.ejs %>
