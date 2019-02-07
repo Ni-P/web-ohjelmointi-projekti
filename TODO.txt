@@ -15,13 +15,13 @@ build back end
     set up routes
         index
         create db and schemas OK
-        set User routes PARTIAL
+        set User routes OK
         set Cottage routes OK
         set Reservation routes OK
     set db queries PARTIAL
     setup passport and auth code OK
-    make id checks to prevent actions from wrong users
-    put title in res globals
+    make id checks to prevent actions from unathorized users
+    put title in res globals OK
 
 test app
 deploy app
