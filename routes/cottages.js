@@ -23,7 +23,7 @@ router.get('/new', middleware.isLoggedAsAdmin, function(req, res) {
     res.render('cottages/new', {title: ' | Add a new cottage'});
 });
 
-router.post('/cottages/new', middleware.isLoggedAsAdmin, function (req, res) {
+router.post('/new', middleware.isLoggedAsAdmin, function (req, res) {
     const newCottage = {
         name: req.body.name,
         location: req.body.location,
@@ -43,8 +43,6 @@ router.post('/cottages/new', middleware.isLoggedAsAdmin, function (req, res) {
             res.redirect("/cottages");
         }
     });
-
-    //res.redirect('/',200);
 });
 
 router.get('/:id/delete', middleware.isLoggedAsAdmin, function (req, res) {
