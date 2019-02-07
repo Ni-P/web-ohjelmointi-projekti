@@ -4,15 +4,45 @@ const passport = require("passport");
 const middleware = require("../middleware");
 var User = require("../models/User");
 
-router.get('/', middleware.isLoggedIn,  function(req, res) {
-    res.send('users list here');
+router.get('/', middleware.isLoggedAsAdmin, function(req, res) {
+    User.find({}, function (err, users) {
+        if(err){
+            req.flash('error','Failed to get users list.');
+            res.redirect('/');
+        } else {
+            res.render('users/users', {title: ' | Users', users});
+        }
+    });
+});
+
+router.get('/:id/show', middleware.isLoggedAsAdmin, function (req,res) {
+   User.findById(req.params.id, function (err, user) {
+       if(err){
+           req.flash('error', 'Failed to get user details');
+           res.redirect('/users');
+       } else {
+           res.render('users/show', {title: " | User", user});
+       }
+   })
+});
+
+router.get('/:id/edit', middleware.isLoggedAsAdmin, function (req, res) {
+    res.send('WIP');
+});
+
+router.get('/:id/delete', middleware.isLoggedAsAdmin, function (req, res) {
+    res.send('WIP');
+});
+
+router.post('/:id/delete', middleware.isLoggedAsAdmin, function (req, res) {
+    res.send('WIP');
 });
 
 router.get('/register', function (req, res) {
     res.render("users/register", {title: " | Register"});
 });
 
-router.post('/register', function (req, res, next) {
+router.post('/register', function (req, res) {
     const userDetails = {
         username: req.body.username,
         admin: false,

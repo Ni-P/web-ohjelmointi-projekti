@@ -8,16 +8,20 @@ build front end
         reservations OK
         new cottage Ok FIX image url
         new reservation OK
+        user management PARTIAL
     tailor css Ok
 
 build back end
     set up routes
         index
-        get cottages OK
         create db and schemas OK
-    set db queries OK
+        set User routes PARTIAL
+        set Cottage routes OK
+        set Reservation routes OK
+    set db queries PARTIAL
     setup passport and auth code OK
     make id checks to prevent actions from wrong users
+    put title in res globals
 
 test app
 deploy app

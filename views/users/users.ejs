@@ -1,0 +1,14 @@
+<% include ../partials/header.ejs %>
+
+<div class="body-content">
+    <ul class="collection">
+        <% users.forEach((user)=>{ %>
+            <a href="/users/<%= user.id %>/show" class="collection-item">
+                <span class="badge">Reservations: <%= user.reservations.length %></span>
+                <%= user.username %>
+            </a>
+        <% }); %>
+    </ul>
+</div>
+
+<% include ../partials/footer.ejs %>
