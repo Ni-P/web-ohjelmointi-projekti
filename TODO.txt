@@ -2,6 +2,7 @@ build front end
     build html
     make views
         landing
+        about
         cottages OK
         login OK
         register OK
@@ -10,6 +11,8 @@ build front end
         new reservation OK
         user management PARTIAL
     tailor css Ok
+    fill out footer
+    put more text where apropriate
 
 build back end
     set up routes
