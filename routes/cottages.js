@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/new', middleware.isLoggedAsAdmin, function(req, res) {
-    res.render('cottages/newCottage', {title: ' | Add a new cottage'});
+    res.render('cottages/new', {title: ' | Add a new cottage'});
 });
 
 router.post('/cottages/new', middleware.isLoggedAsAdmin, function (req, res) {
@@ -59,7 +59,7 @@ router.get('/:id/delete', middleware.isLoggedAsAdmin, function (req, res) {
                     res.redirect('/');
                 } else {
                     console.log(populated.toString());
-                    res.render('cottages/deleteCottage',
+                    res.render('cottages/delete',
                         {   reservations: populated,
                             title: " | Reservations"
                         });
@@ -85,6 +85,48 @@ router.post('/:id/delete', middleware.isLoggedAsAdmin, function (req, res) {
             })
         }
     })
+});
+
+router.get('/:id/show', function (req, res) {
+    Cottage.findById(req.params.id, function(err, cottage) {
+        if(err){
+            console.error(err);
+            res.redirect('/cottages');
+        } else {
+            res.render('cottages/show', { cottage, title: ' | Cottage'});
+        }
+    });
+});
+
+router.get('/:id/edit', middleware.isLoggedAsAdmin, function (req, res) {
+    Cottage.findById(req.params.id, function(err, cottage) {
+        if(err){
+            console.error(err);
+            res.redirect('/cottages');
+        } else {
+            res.render('cottages/edit', { cottage, title: ' | Cottage'});
+        }
+    });
+});
+
+router.post('/:id/edit', middleware.isLoggedAsAdmin, function (req, res) {
+    const updates = {
+        name: req.body.name,
+        description: req.body.description,
+        location: req.body.location,
+        image: req.body.image,
+        price: req.body.price
+    };
+    Cottage.findByIdAndUpdate(req.params.id, updates,{new: true}, function(err, cottage) {
+        if(err){
+            console.error(err);
+            req.flash('error', "Failed to edit cottage.");
+            res.render('cottages/edit', { cottage, title: ' | Cottage'});
+        } else {
+            req.flash('success', "Cottage edited successfully.");
+            res.render('cottages/show', { cottage, title: ' | Cottage'});
+        }
+    });
 });
 
 module.exports = router;

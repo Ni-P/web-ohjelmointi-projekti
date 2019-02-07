@@ -6,6 +6,12 @@ const { ObjectId } = Schema;
 var UserSchema = new Schema({
     username: String,
     password: String,
+    firstname: String,
+    lastname: String,
+    address: String,
+    postalCode: Number,
+    phone: Number,
+    email: String,
     admin: Boolean,
     reservations: [{
             type: ObjectId,

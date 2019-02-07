@@ -9,11 +9,21 @@ router.get('/', middleware.isLoggedIn,  function(req, res) {
 });
 
 router.get('/register', function (req, res) {
-    res.render("users/register", {title: "Register"});
+    res.render("users/register", {title: " | Register"});
 });
 
 router.post('/register', function (req, res, next) {
-    let newUser =  new User({username: req.body.username, admin: false});
+    const userDetails = {
+        username: req.body.username,
+        admin: false,
+        firstname: req.body.firstname,
+        lastname: req.body.lastname,
+        address: req.body.address,
+        postalCode: req.body.postalcode,
+        phone: req.body.phone,
+        email: req.body.email,
+    };
+    let newUser =  new User(userDetails);
     User.register(newUser, req.body.password, function (err) {
         if(err){
             if(err.name === "UserExistsError"){
@@ -41,7 +51,7 @@ router.post('/login', passport.authenticate('local',
         successRedirect: '/cottages',
         failureRedirect: '/users/login'
     }), function(req, res) {
-    res.send('LOGIN HAPPENS HERE');
+
 });
 
 router.get('/logout', function(req, res) {
