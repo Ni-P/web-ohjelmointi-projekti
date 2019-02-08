@@ -9,6 +9,21 @@
     <link rel='stylesheet' href='/stylesheets/style.css'>
 </head>
 <body>
+<% if(currentUser) { %>
+    <ul id="nav-dropdown" class="dropdown-content dropdown-mover dropdown-sizer">
+        <!--<li><a href="/users/login">Login</a></li>-->
+
+        <% if(currentUser && currentUser.admin) {%>
+            <li><a href="/users/">Users</a></li>
+            <li class="divider"></li>
+        <% } %>
+        <li><a href="/reservations/">Reservations</a></li>
+        <li class="divider"></li>
+        <li><a href="/users/<%= currentUser.id %>/show">Account</a></li>
+        <li class="divider"></li>
+        <li><a href="/users/logout">Logout</a></li>
+    </ul>
+<% } %>
     <nav>
         <div class="nav-wrapper green darken-3">
             <a href="/" class="brand-logo"><%= siteName %></a>
@@ -20,12 +35,11 @@
                 <li><a href="/cottages">Cottages</a></li>
                 <li><a href="/about">About</a></li>
                 <% if(!currentUser){ %>
-                <li><a href="/users/login">Login</a></li>
-                <li><a href="/users/register">Register</a></li>
+                <li><a href="/users/login">Login or Register</a></li>
+                <!--<li><a href="/users/register">Register</a></li>-->
                 <% } else { %>
-                <li><a href='/reservations'><%= currentUser.username %></a></li>
-                <li><a href="/users/logout">Logout</a></li>
-                <% } %>
+                    <li><a class="dropdown-trigger" href="#!" data-target="nav-dropdown"><%= currentUser.username %><i class="material-icons right">arrow_drop_down</i></a></li>
+                    <% } %>
             </ul>
         </div>
     </nav>
@@ -37,7 +51,7 @@
     <% if(error && error.length > 0) { %>
     <div class="row flash-content">
         <div class="col s12">
-            <div class="card-panel red">
+            <div class="card-panel red darken-1">
                 <span class="white-text"><%= error %></span>
             </div>
         </div>
@@ -46,10 +60,14 @@
     <% if(success && success.length > 0) { %>
         <div class="row flash-content">
             <div class="col s12">
-                <div class="card-panel green">
+                <div class="card-panel green darken-1">
                     <span class="white-text"><%= success %></span>
                 </div>
             </div>
         </div>
     <% } %>
 
+
+<!--<script>-->
+    <!--document.querySelector(".dropdown-trigger").dropdown();-->
+<!--</script>-->

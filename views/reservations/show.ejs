@@ -11,7 +11,7 @@
                     <h5><%= reservation.cottage.name %></h5>
                     <h6><%= reservation.cottage.location %></h6>
                     <span><%= reservation.cottage.description %></span>
-                    <h6>Reserved day: <%= new Date(reservation.date).toDateString() %></h6>
+                    <h6>Reserved for: <%= new Date(reservation.date).toDateString() %></h6>
                     <div class="card-action">
                         <a class="btn orange darken-2" href="/reservations">Go Back</a>
                         <a class="btn red darken-2" href="/reservations/<%=reservation.id%>/delete">Cancel Reservation</a>

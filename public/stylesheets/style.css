@@ -1,5 +1,6 @@
 :root {
     --desktop-width: 70%;
+    --mobile-width: 90%;
     --desktop-breakpoint: 993px;
 }
 
@@ -16,8 +17,21 @@ footer {
     margin: auto;
 }
 .cottages-content {
-    width: 90%;
+    width: var(--mobile-width);
     margin: auto;
+}
+
+.flash-content{
+    margin: auto;
+    width: var(--mobile-width);
+}
+.form-content{
+    margin: auto;
+    width: var(--mobile-width);
+}
+.body-content{
+    margin: auto;
+    width: var(--mobile-width);
 }
 
 nav {
@@ -57,6 +71,13 @@ nav {
     .body-content{
         margin: auto;
         width: var(--desktop-width);
+    }
+    .dropdown-mover {
+        top: -64px;
+        left: 10px;
+    }
+    .dropdown-sizer {
+        min-width: 117px;
     }
 }
 

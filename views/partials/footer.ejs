@@ -1,12 +1,4 @@
 
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems, {draggable: true});
-    });
-
-</script>
-
 <footer class="page-footer green darken-3">
     <div class="container">
         <div class="row">
@@ -28,6 +20,13 @@
         </div>
     </div>
 </footer>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems, {draggable: true});
+        M.Dropdown.init(document.querySelector(".dropdown-trigger"),{});
+    });
 
+</script>
 </body>
 </html>
