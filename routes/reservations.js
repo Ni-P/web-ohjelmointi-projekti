@@ -5,15 +5,18 @@ const Reservation = require('../models/Reservation');
 const Cottage = require("../models/Cottage");
 const User = require("../models/User");
 
-const middleware = require("../middleware");
+const {
+    isLoggedIn,
+    isOwnerOfReservation
+} = require("../middleware");
 
-router.get('/', middleware.isLoggedIn, function (req, res) {
-    Reservation.find({user: req.user._id},"date cottage",function (err, reservations) {
+router.get('/', isLoggedIn, function (req, res) {
+    Reservation.find(req.user.admin?{}:{user: req.user._id},function (err, reservations) {
         if(err) {
             console.error(err);
             res.redirect('/');
         } else {
-            Reservation.populate(reservations,"cottage",function (err, populated) {
+            Reservation.populate(reservations,[{ path: 'cottage', model: 'Cottage' },{ path: 'user', model: 'User' }],function (err, populated) {
                 if (err) {
                     console.error(err);
                     res.redirect('/');
@@ -27,10 +30,9 @@ router.get('/', middleware.isLoggedIn, function (req, res) {
             });
         }
     });
-
 });
 
-router.get('/:id/new', middleware.isLoggedIn, function (req, res) {
+router.get('/:id/new', isLoggedIn, function (req, res) {
     Reservation.find({cottage: req.params.id},"date",function (err, dates) {
         if(err) {
             console.error(err);
@@ -52,7 +54,7 @@ router.get('/:id/new', middleware.isLoggedIn, function (req, res) {
     });
 });
 
-router.post('/:id/new', middleware.isLoggedIn, function (req, res) {
+router.post('/:id/new', isLoggedIn, function (req, res) {
     const newReservation = {
         user: req.user._id,
         cottage: req.params.id,
@@ -76,13 +78,11 @@ router.post('/:id/new', middleware.isLoggedIn, function (req, res) {
                     res.redirect('/reservations');
                 }
             })
-            // res.redirect('/reservations');
         }
     });
-    // res.redirect(`/${req.params.id}/new`);
 });
 
-router.get('/:id/delete', middleware.isLoggedIn, function (req, res) {
+router.get('/:id/delete', isLoggedIn, isOwnerOfReservation, function (req, res) {
     Reservation.findById(req.params.id, function (err, reservation) {
         if(err){
             console.error(err);
@@ -102,10 +102,9 @@ router.get('/:id/delete', middleware.isLoggedIn, function (req, res) {
 
         }
     });
-
 });
 
-router.post('/:id/delete', middleware.isLoggedIn, function (req, res) {
+router.post('/:id/delete', isLoggedIn, isOwnerOfReservation, function (req, res) {
     User.findById(req.user.id,"reservations",function (err, user) {
         if(err){
             console.error(err);
@@ -135,13 +134,13 @@ router.post('/:id/delete', middleware.isLoggedIn, function (req, res) {
     });
 });
 
-router.get('/:id/show', middleware.isLoggedIn,function (req, res) {
+router.get('/:id/show', isLoggedIn, isOwnerOfReservation, function (req, res) {
     Reservation.findById(req.params.id, function (err, reservation) {
         if(err){
             console.error(err);
             res.redirect('/');
         } else {
-            Reservation.populate(reservation,"cottage",function (err, populated) {
+            Reservation.populate(reservation,"cottage user",function (err, populated) {
                 if(err){
                     console.error(err);
                     res.redirect('/');

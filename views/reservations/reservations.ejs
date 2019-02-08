@@ -7,6 +7,9 @@
             <img src="/images/<%= reservation.cottage.image %>" alt="cottage image" class="circle">
             <a href="/reservations/<%= reservation.id %>/show" class="title"><%= reservation.cottage.name %></a>
             <p>Reserved for: <%= new Date(reservation.date).toDateString() %></p>
+            <%if(currentUser && currentUser.admin){%>
+                <p>Made by user: <a href="/users/<%=reservation.user.id%>/show"><%= reservation.user.username %></a></p>
+            <%}%>
             <!--<a href="/reservations/<%= reservation.id %>/show" class="secondary-content btn green darken-2">Details</a>-->
             <a href="/reservations/<%= reservation.id %>/delete" class="secondary-content btn red darken-4">Cancel Reservation</a>
         </li>
