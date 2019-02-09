@@ -48,8 +48,15 @@ const isOwnerOfReservation = function(req,res,next) {
     });
 };
 
-const isOwnerOfAccount = function(req,res,next){
-    next();
+const isOwnerOfAccount = function(req,res,next) {
+    if(req.user.admin) return next();
+    if(!req.params.id) return res.redirect(`/users/${req.user.id}/show`);
+    if(req.user.id===req.params.id){
+        // console.log('id match');
+        return next();
+    } else{
+        res.redirect(`/users/${req.user.id}/show`);
+    }
 };
 
 module.exports = {

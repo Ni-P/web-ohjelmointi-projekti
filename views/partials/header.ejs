@@ -11,16 +11,16 @@
 <body>
 <% if(currentUser) { %>
     <ul id="nav-dropdown" class="dropdown-content dropdown-mover dropdown-sizer">
-        <!--<li><a href="/users/login">Login</a></li>-->
-
         <% if(currentUser && currentUser.admin) {%>
             <li><a href="/users/">Users</a></li>
             <li class="divider"></li>
         <% } %>
         <li><a href="/reservations/">Reservations</a></li>
         <li class="divider"></li>
-        <li><a href="/users/<%= currentUser.id %>/show">Account</a></li>
-        <li class="divider"></li>
+            <% if(currentUser && !currentUser.admin){ %>
+            <li><a href="/users/<%= currentUser.id %>/show">Account</a></li>
+                <li class="divider"></li>
+            <%}%>
         <li><a href="/users/logout">Logout</a></li>
     </ul>
 <% } %>
@@ -29,9 +29,6 @@
             <a href="/" class="brand-logo"><%= siteName %></a>
             <a href="#" data-target="mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <% if(currentUser && currentUser.admin){ %>
-                <li><a href="/users">Users</a></li>
-                <% } %>
                 <li><a href="/cottages">Cottages</a></li>
                 <li><a href="/about">About</a></li>
                 <% if(!currentUser){ %>
@@ -48,6 +45,8 @@
         <li><a href="/about">About</a></li>
         <li><a href="/users/login">Login</a></li>
     </ul>
+
+    <!--Flash messages-->
     <% if(error && error.length > 0) { %>
     <div class="row flash-content">
         <div class="col s12">

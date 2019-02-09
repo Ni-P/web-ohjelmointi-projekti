@@ -2,6 +2,7 @@
 <% include ../partials/header.ejs %>
 
 <div class="row body-content">
+    <h5 class="center-align">Create a new cottage</h5>
     <form class="col s12" method="post">
         <div class="row">
             <div class="input-field col s12">
@@ -17,10 +18,21 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <label for="image">Image URL</label>
-                <input id="image" type="text" name="image" class="validate" required>
+                <select class="icons" name="image">
+                    <option value="" disabled selected>Choose your option</option>
+                    <option value="5817409647_50a0f1bf51_b.jpg" data-icon="/images/5817409647_50a0f1bf51_b.jpg">cottage 1</option>
+                    <option value="images/5817418723_2bda59f000_b.jpg" data-icon="/images/5817418723_2bda59f000_b.jpg">cottage 2</option>
+                    <option value="5817984136_a85f4ab07b_b.jpg" data-icon="/images/5817984136_a85f4ab07b_b.jpg">cottage 3</option>
+                </select>
+                <label>Images in select</label>
             </div>
         </div>
+        <!--<div class="row">-->
+            <!--<div class="input-field col s12">-->
+                <!--<label for="image">Image URL</label>-->
+                <!--<input id="image" type="text" name="image" class="validate" required>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="row">
             <div class="input-field col s12">
                 <label for="description">Cottage description</label>

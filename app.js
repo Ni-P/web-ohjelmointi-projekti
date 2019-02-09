@@ -53,7 +53,7 @@ passport.serializeUser(User.serializeUser());
 
 passport.deserializeUser(User.deserializeUser());
 app.use(function(req, res, next){
-    res.locals.siteName = "Cot Etsi";
+    res.locals.siteName = "Cott Etsi";
     res.locals.currentUser = req.user;
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");

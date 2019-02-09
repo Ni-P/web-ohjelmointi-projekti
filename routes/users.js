@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const passport = require("passport");
-const middleware = require("../middleware");
+// const middleware = require("../middleware");
+const { isOwnerOfAccount } = require("../middleware");
+
 const User = require("../models/User");
 const Reservation = require("../models/Reservation");
 
-router.get('/', middleware.isLoggedAsAdmin, function(req, res) {
+router.get('/', isOwnerOfAccount, function(req, res) {
     User.find({}, function (err, users) {
         if(err){
             req.flash('error','Failed to get users list.');
@@ -16,7 +18,7 @@ router.get('/', middleware.isLoggedAsAdmin, function(req, res) {
     });
 });
 
-router.get('/:id/show', middleware.isLoggedAsAdmin, function (req,res) {
+router.get('/:id/show', isOwnerOfAccount, function (req,res) {
    User.findById(req.params.id, function (err, user) {
        if(err){
            req.flash('error', 'Failed to get user details');
@@ -27,7 +29,7 @@ router.get('/:id/show', middleware.isLoggedAsAdmin, function (req,res) {
    })
 });
 
-router.get('/:id/edit', middleware.isLoggedAsAdmin, function (req, res) {
+router.get('/:id/edit', isOwnerOfAccount, function (req, res) {
     User.findById(req.params.id, function (err, user) {
         if(err){
             console.error(err);
@@ -38,7 +40,7 @@ router.get('/:id/edit', middleware.isLoggedAsAdmin, function (req, res) {
     });
 });
 
-router.post('/:id/edit', middleware.isLoggedAsAdmin, function (req, res) {
+router.post('/:id/edit', isOwnerOfAccount, function (req, res) {
     let updates = {
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -57,7 +59,7 @@ router.post('/:id/edit', middleware.isLoggedAsAdmin, function (req, res) {
     });
 });
 
-router.get('/:id/delete', middleware.isLoggedAsAdmin, function (req, res) {
+router.get('/:id/delete', isOwnerOfAccount, function (req, res) {
     Reservation.find({user: req.params.id}, function (err, reservations) {
         if(err){
             console.error(err);
@@ -76,7 +78,7 @@ router.get('/:id/delete', middleware.isLoggedAsAdmin, function (req, res) {
     });
 });
 
-router.post('/:id/delete', middleware.isLoggedAsAdmin, function (req, res) {
+router.post('/:id/delete', isOwnerOfAccount, function (req, res) {
     User.findById(req.params.id,function (err,user) {
         if(err){
             console.log(err);

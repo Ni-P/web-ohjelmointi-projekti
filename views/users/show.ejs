@@ -1,6 +1,7 @@
 <% include ../partials/header.ejs %>
 
 <div class="body-content">
+    <h3 class="center-align">User details</h3>
     <ul class="collection">
         <li class="collection-item">Username: <%= user.username %></li>
         <li class="collection-item">Full name: <%= user.firstname %> <%= user.lastname %></li>
@@ -9,7 +10,11 @@
         <li class="collection-item">Phone number: <%= user.phone %></li>
         <li class="collection-item">Email: <%= user.email %></li>
     </ul>
-    <a class="btn green darken-2" href="/users">Back</a>
+    <%if(currentUser.admin){%>
+        <a class="btn green darken-2" href="/users">Back</a>
+    <%} else {%>
+        <a class="btn green darken-2" href="/reservations">Reservations</a>
+    <%}%>
     <a class="btn orange darken-2" href="/users/<%= user.id %>/edit">Edit User</a>
     <% if(!currentUser.admin) { %>
     <a class="btn red darken-2" href="/users/<%= user.id %>/delete">Delete User</a>
