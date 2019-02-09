@@ -15,7 +15,7 @@
                     <div class="card-action">
                         <form method="post" class="">
                             <!--<label class="flow-text" for="confirm">Please confirm:</label>-->
-                            <h6>Are you sure you wish to cancel your reservation?</h6>
+                            <h6>Are you sure you wish to cancel <%if(currentUser.admin){%>this<%}else{%>your<%}%> reservation?</h6>
                             <input class="btn red darken-3 white-text left-align" type="submit" name="confirm" value="confirm">
                             <!--<div class="card-action right-align">-->
                             <a href="/reservations/<%= reservation.id %>/show" class="btn orange darken-2 right-align">Go back</a>

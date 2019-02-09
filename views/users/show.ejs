@@ -1,7 +1,11 @@
 <% include ../partials/header.ejs %>
 
 <div class="body-content">
-    <h3 class="center-align">User details</h3>
+    <%if(currentUser.admin){%>
+        <h3 class="center-align">User details</h3>
+    <%} else {%>
+            <h3 class="center-align">Contact information</h3>
+    <%}%>
     <ul class="collection">
         <li class="collection-item">Username: <%= user.username %></li>
         <li class="collection-item">Full name: <%= user.firstname %> <%= user.lastname %></li>
@@ -9,15 +13,18 @@
         <li class="collection-item">Postal code: <%= user.postalCode %></li>
         <li class="collection-item">Phone number: <%= user.phone %></li>
         <li class="collection-item">Email: <%= user.email %></li>
+        <% if(user.admin) { %>
+            <li class="collection-item">User is an administrator</li>
+        <%}%>
     </ul>
     <%if(currentUser.admin){%>
         <a class="btn green darken-2" href="/users">Back</a>
     <%} else {%>
         <a class="btn green darken-2" href="/reservations">Reservations</a>
     <%}%>
-    <a class="btn orange darken-2" href="/users/<%= user.id %>/edit">Edit User</a>
-    <% if(!currentUser.admin) { %>
-    <a class="btn red darken-2" href="/users/<%= user.id %>/delete">Delete User</a>
+    <a class="btn orange darken-2" href="/users/<%= user.id %>/edit">Edit Details</a>
+    <% if(!user.admin) { %>
+    <a class="btn red darken-2" href="/users/<%= user.id %>/delete">Delete Account</a>
     <% } else { %>
         <a class="btn red darken-2 disabled" href="/users/<%= user.id %>/delete">Can not delete admin acounts</a>
     <% } %>

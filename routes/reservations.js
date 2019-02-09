@@ -7,7 +7,8 @@ const User = require("../models/User");
 
 const {
     isLoggedIn,
-    isOwnerOfReservation
+    isOwnerOfReservation,
+    hasContactDetails
 } = require("../middleware");
 
 router.get('/', isLoggedIn, function (req, res) {
@@ -32,7 +33,7 @@ router.get('/', isLoggedIn, function (req, res) {
     });
 });
 
-router.get('/:id/new', isLoggedIn, function (req, res) {
+router.get('/:id/new', isLoggedIn, hasContactDetails, function (req, res) {
     Reservation.find({cottage: req.params.id},"date",function (err, dates) {
         if(err) {
             console.error(err);

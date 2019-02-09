@@ -34,6 +34,7 @@ router.get('/:id/edit', isOwnerOfAccount, function (req, res) {
         if(err){
             console.error(err);
             req.flash('error', 'Could not get user details');
+            res.redirect('/');
         } else {
             res.render('users/edit', {title: ' | Edit User', user});
         }

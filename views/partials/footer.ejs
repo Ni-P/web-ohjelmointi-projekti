@@ -1,4 +1,4 @@
-
+</main>
 <footer class="page-footer green darken-3">
     <div class="container">
         <div class="row">
@@ -22,8 +22,8 @@
 </footer>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var elems = document.querySelectorAll('.sidenav');
-        var instances = M.Sidenav.init(elems, {draggable: true});
+        M.Sidenav.init(document.querySelectorAll('.sidenav'), {draggable: true});
+        M.Carousel.init(document.querySelectorAll('.carousel'), {fullWidth: true,indicators:true});
         M.Dropdown.init(document.querySelector(".dropdown-trigger"),{});
         M.FormSelect.init(document.querySelectorAll('select'), {});
     });

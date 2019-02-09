@@ -59,9 +59,29 @@ const isOwnerOfAccount = function(req,res,next) {
     }
 };
 
+const hasContactDetails = function(req,res,next){
+    User.findById(req.user.id,function (err, user) {
+        if(err){
+            console.error(err);
+            res.redirect('/');
+        } else {
+            console.log(user);
+            if(user.firstname && user.lastname && user.address && user.postalCode && user.phone && user.email){
+                // console.log("has contact");
+                next();
+            } else {
+                // console.log("has NOT contact");
+                req.flash('warning', "You must provide all your contact information before making a reservation.");
+                res.redirect(`/users/${req.user.id}/edit`);
+            }
+        }
+    })
+};
+
 module.exports = {
     isLoggedIn,
     isLoggedAsAdmin,
     isOwnerOfReservation,
-    isOwnerOfAccount
+    isOwnerOfAccount,
+    hasContactDetails
 };

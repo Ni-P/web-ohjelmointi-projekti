@@ -16,8 +16,14 @@
                     <p>Reserved by user: <a href="/users/<%=reservation.user.id%>/show"><%= reservation.user.username %></a></p>
                     <%}%>
                     <div class="card-action">
-                        <a class="btn orange darken-2" href="/reservations">Go Back</a>
-                        <a class="btn red darken-2" href="/reservations/<%=reservation.id%>/delete">Cancel Reservation</a>
+                        <div class="row">
+                            <div class="col s4 l4">
+                                <a class="btn orange darken-2" href="/reservations">Go Back</a>
+                            </div>
+                            <div class="col s8 l8">
+                                <a class="btn red darken-2" href="/reservations/<%=reservation.id%>/delete">Cancel Reservation</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
