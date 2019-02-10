@@ -65,10 +65,10 @@ router.post('/:id/new', isLoggedIn, function (req, res) {
     Reservation.create(newReservation, function (err, newInsert) {
         if(err){
             console.error(err);
-            req.flash('error', "Could not make the reservation.");
+            req.flash('error', "There was an error in the reservation. Please try again later.");
             res.render(`/${req.params.id}/new`);
         } else {
-            req.flash('success', "Reservasion was successfull.");
+            req.flash('success', "Thank you for your reservation.");
             User.findById(newReservation.user,function (err, newEntry) {
                 if(err){
                     console.error(err);

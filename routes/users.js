@@ -126,6 +126,7 @@ router.post('/register', function (req, res) {
     };
     let newUser =  new User(userDetails);
     User.register(newUser, req.body.password, function (err) {
+        console.log(typeof req.body.password);
         if(err){
             if(err.name === "UserExistsError"){
                 req.flash("error", "Username already exists.");

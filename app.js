@@ -14,32 +14,36 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const cottagesRouter = require('./routes/cottages');
 const aboutRouter = require('./routes/about');
-// set up flash messages
+
 const reservationsRouter = require('./routes/reservations');
 
-// const loginRouter = require('./routes/login');
-
 const keys = require("./config/keys");
+const seedDB = require("./seedDB");
+
+const useRemote = false; // select remote or local from config/keys.js
 
 const app = express();
 
 // mongodb setup
-mongoose.connect(keys.mongoURI, {useNewUrlParser: true}).then(()=>{
-    console.log("mongoose connected.");
-},()=>{
+mongoose.connect(useRemote ? keys.mongoURI.remote:keys.mongoURI.local, {useNewUrlParser: true})
+    .then(()=>{
+        console.log("mongoose connected.");
+        if(!useRemote) seedDB();
+},(err)=>{
+        console.error(err);
     console.log("mongoose failed to connect!");
 });
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-
 app.set('view engine', 'ejs');
+
 // body-parser setup
 app.use(bodyParser.urlencoded({ extended: false }));
-
 app.use(bodyParser.json());
 
 // set up flash messages
 app.use(flash());
+
 // passport config
 app.use(require("express-session")({
     secret: "sdmjnge73jmlzxcbnf740pqwk4mzpikwijhg7fo0su",

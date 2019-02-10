@@ -1,8 +1,8 @@
 build front end
     build html
     make views
-        landing
-        about
+        landing OK
+        about OK
         cottages OK
         login OK
         register OK
@@ -11,9 +11,10 @@ build front end
         new reservation OK
         user management OK
     tailor css Ok
-    fill out footer
-    put more text where apropriate PARTIAL
+    fill out footer OK
+    put more text where apropriate OK
     finish mobile UI
+    make carousel at landing use featured cottages
 
 build back end
     set up routes
@@ -26,7 +27,7 @@ build back end
     setup passport and auth code OK
     make id checks to prevent actions from unathorized users OK
     put title in res globals OK
-    require users to provide contact details before reservation
+    require users to provide contact details before reservation OK
 
 test app
 deploy app

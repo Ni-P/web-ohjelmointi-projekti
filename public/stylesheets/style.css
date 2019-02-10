@@ -1,5 +1,5 @@
 :root {
-    --desktop-width: 85%;
+    --desktop-width: 90%; /* 85% causes trembling when hovering buttons at /cottages with page width: around 1850px*/
     --mobile-width: 90%;
     --desktop-breakpoint: 993px;
 }
