@@ -20,7 +20,7 @@ const reservationsRouter = require('./routes/reservations');
 const keys = require("./config/keys");
 const seedDB = require("./seedDB");
 
-const useRemote = false; // select remote or local from config/keys.js
+const useRemote = true; // select remote or local from config/keys.js
 
 const app = express();
 

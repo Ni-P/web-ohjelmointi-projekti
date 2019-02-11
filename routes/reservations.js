@@ -17,6 +17,10 @@ router.get('/', isLoggedIn, function (req, res) {
             console.error(err);
             res.redirect('/');
         } else {
+            // if(!reservations) return res.render('reservations/reservations',
+            //     {   reservations: [],
+            //         title: " | Reservations"
+            //     });
             Reservation.populate(reservations,[{ path: 'cottage', model: 'Cottage' },{ path: 'user', model: 'User' }],function (err, populated) {
                 if (err) {
                     console.error(err);

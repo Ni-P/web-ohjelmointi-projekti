@@ -11,7 +11,7 @@ const data = {
         {name:"First Cottage",location: "At First Location",price:100,image:"5817409647_50a0f1bf51_b.jpg",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis risus vel nibh elementum aliquet. Donec tristique mi ex, id accumsan felis luctus vel. Ut scelerisque ipsum eu sem placerat aliquam vel a sapien. Quisque neque nunc, vehicula vitae molestie non, commodo sit amet urna. Duis non sollicitudin urna. Nulla eget quam mi."},
         {name:"Second Cottage",location:"At Second Location",price:200,image:"5817418723_2bda59f000_b.jpg",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis risus vel nibh elementum aliquet. Donec tristique mi ex, id accumsan felis luctus vel. Ut scelerisque ipsum eu sem placerat aliquam vel a sapien. Quisque neque nunc, vehicula vitae molestie non, commodo sit amet urna. Duis non sollicitudin urna. Nulla eget quam mi."},
         {name:"Third Cottage",location:"At Third Location",price:300,image:"5817984136_a85f4ab07b_b.jpg",description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean iaculis risus vel nibh elementum aliquet. Donec tristique mi ex, id accumsan felis luctus vel. Ut scelerisque ipsum eu sem placerat aliquam vel a sapien. Quisque neque nunc, vehicula vitae molestie non, commodo sit amet urna. Duis non sollicitudin urna. Nulla eget quam mi."}],
-    reservations: [{}]
+    reservations: []
 };
 
 module.exports = function() {
