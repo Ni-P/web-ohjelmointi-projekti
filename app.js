@@ -21,17 +21,19 @@ const keys = require("./config/keys");
 const seedDB = require("./seedDB");
 
 const useRemote = true; // select remote or local from config/keys.js
+const localDBName = "/cottetsi";
+const resetLocalDB = false; // empty the local DB and populate with initial data
 
 const app = express();
 
 // mongodb setup
-mongoose.connect(useRemote ? keys.mongoURI.remote:keys.mongoURI.local, {useNewUrlParser: true})
+mongoose.connect(useRemote ? keys.mongoURI.remote:keys.mongoURI.local+localDBName, {useNewUrlParser: true})
     .then(()=>{
         console.log("mongoose connected.");
-        if(!useRemote) seedDB();
-},(err)=>{
+        if(!useRemote) seedDB(resetLocalDB);
+    },(err)=>{
         console.error(err);
-    console.log("mongoose failed to connect!");
+        console.log("mongoose failed to connect!");
 });
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -54,8 +56,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
-
 passport.deserializeUser(User.deserializeUser());
+
+// top-level middleware
 app.use(function(req, res, next){
     res.locals.siteName = "Cott Etsi";
     res.locals.currentUser = req.user;
@@ -69,6 +72,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// setup routes
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);

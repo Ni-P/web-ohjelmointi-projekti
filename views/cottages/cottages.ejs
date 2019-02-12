@@ -27,7 +27,7 @@
                 </div>
                 <div class="card-reveal">
                     <span class="card-title grey-text text-darken-4">Description<i class="material-icons right">close</i></span>
-                    <p><%= cottage.description %></p></div>
+                    <p class="flow-text"><%= cottage.description %></p></div>
                 <% if(currentUser && currentUser.admin) { %>
                 <div class="card-action right-align">
                     <a class="btn orange darken-2 darken-1" href="/cottages/<%= cottage.id %>/edit">Edit</a>

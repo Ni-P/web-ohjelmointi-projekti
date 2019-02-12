@@ -1,6 +1,7 @@
 <% include ../partials/header.ejs %>
 
 <div class="body-content">
+    <h3 class="center-align">Reservations</h3>
     <%if (reservations.length > 0) {%>
     <ul class="collection">
         <% reservations.forEach((reservation)=>{ %>
@@ -11,7 +12,6 @@
             <%if(currentUser && currentUser.admin){%>
                 <p>Made by user: <a href="/users/<%=reservation.user.id%>/show"><%= reservation.user.username %></a></p>
             <%}%>
-            <!--<a href="/reservations/<%= reservation.id %>/show" class="secondary-content btn green darken-2">Details</a>-->
             <a href="/reservations/<%= reservation.id %>/delete" class="secondary-content btn red darken-4">Cancel Reservation</a>
         </li>
         <% }); %>
@@ -26,7 +26,6 @@
                 <% } %>
         </div>
         <% } %>
-
 </div>
 
 <% include ../partials/footer.ejs %>

@@ -14,7 +14,8 @@ const data = {
     reservations: []
 };
 
-module.exports = function() {
+module.exports = function(resetDb) {
+    if(!resetDb) return;
     User.remove({}, function (err) {
         if (err) console.error(err);
         data.users.forEach(user => {

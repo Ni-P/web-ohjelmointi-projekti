@@ -49,13 +49,14 @@ const isOwnerOfReservation = function(req,res,next) {
 };
 
 const isOwnerOfAccount = function(req,res,next) {
-    if(req.user.admin) return next();
-    if(!req.params.id) return res.redirect(`/users/${req.user.id}/show`);
-    if(req.user.id===req.params.id){
+    if(req.user && req.user.admin) return next();
+    if(req.user && req.params.id !== req.user.id) return res.redirect(`/users/${req.user.id}/show`);
+    if(req.user && req.user.id===req.params.id) {
         // console.log('id match');
         return next();
     } else{
-        res.redirect(`/users/${req.user.id}/show`);
+        res.redirect(req.user && req.user.id ? `/users/${req.user.id}/show`:"/");
+        // res.redirect(`/users/${req.user && req.user.id?req.user.id+'/show':""}`);
     }
 };
 

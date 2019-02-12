@@ -19,14 +19,38 @@ router.get('/', isOwnerOfAccount, function(req, res) {
 });
 
 router.get('/:id/show', isOwnerOfAccount, function (req,res) {
-   User.findById(req.params.id, function (err, user) {
-       if(err){
-           req.flash('error', 'Failed to get user details');
-           res.redirect('/users');
-       } else {
-           res.render('users/show', {title: " | User", user});
-       }
-   })
+    User.findById(req.params.id, function(err,user) {
+        if(err){
+            console.error(err);
+            req.flash('error', 'Failed to get user details');
+            res.redirect('/users');
+        }else {
+            User.populate(user, "reservations", function (err, reservations) {
+                if (err) {
+                    console.error(err);
+                    req.flash('error', 'Failed to get reservations');
+                    // res.redirect('/users');
+                    res.render('users/show', {title: " | User", user, reservations: []});
+                } else {
+                    // console.log(reservations);
+                    User.populate(reservations, {
+                        path: 'reservations.cottage',
+                        model: 'Cottage'
+                    }, function (err, populated) {
+                        if (err) {
+                            console.error(err);
+                            req.flash('error', 'Failed to get reservations');
+                            res.render('users/show', {title: " | User", user, reservations: []});
+                            // res.redirect('/users');
+                        } else {
+                            // console.log(populated.reservations[0].cottage.toString());
+                            res.render('users/show', {title: " | User", user, reservations: populated.reservations});
+                        }
+                    });
+                }
+            });
+        }
+    });
 });
 
 router.get('/:id/edit', isOwnerOfAccount, function (req, res) {
@@ -55,7 +79,7 @@ router.post('/:id/edit', isOwnerOfAccount, function (req, res) {
             console.error(err);
             req.flash('error', 'Could not update user details');
         } else {
-            res.render('users/show', {title: ' | Edit User', user});
+            res.redirect(`/users/${user.id}/show`);
         }
     });
 });
