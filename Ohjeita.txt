@@ -1,0 +1,27 @@
+Ensin komento: npm install
+Sitten: npm run start
+
+mongoose kytkeytyy oletuarvoisesti pilvipalvelussa sijaitsevaan mondodb:seen
+Jos haluaa käyttää paikallista mongoa niin:
+app.js riville: const useRemote = true; laitetaan arvoksi false
+ja tietokannan nimi annetaan seuraavassa rivissä:
+    const localDBName = "/cottetsi";
+
+laittamalla riville: const resetLocalDB = false; arvo true
+mongoose alustaa paikallisen tietokannan oletusarvoilla, jotka sijaitsevat tässä: seedDB.js
+
+Olen luonut ainakin nämä kaksi tiliä:
+
+username: admin
+salasana: 123
+
+username: user
+salasana: 123
+
+admin tilillä on hallinointi oikeudet
+sivusto ei salli admin tilin luomisen, mutta Schemassa oikeudet määrittää tietue: "admin: Boolean"
+
+Jos jostakin syystä sivusto ei toimi localhostissa niin sen löytää linkistä:
+https://cott-etsi.herokuapp.com/
+jossa sen on hostattu
+Tietenkin sivuston toimivuuden voi arvioida suoraan sieltä, sillä lähdekoodi ja tietokanta on sama.

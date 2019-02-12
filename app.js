@@ -20,6 +20,7 @@ const reservationsRouter = require('./routes/reservations');
 const keys = require("./config/keys");
 const seedDB = require("./seedDB");
 
+// ----- DATABASE CONFIGURATION --------------
 const useRemote = true; // select remote or local from config/keys.js
 const localDBName = "/cottetsi";
 const resetLocalDB = false; // empty the local DB and populate with initial data

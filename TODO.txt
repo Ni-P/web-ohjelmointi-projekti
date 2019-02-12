@@ -29,5 +29,5 @@ build back end
     put title in res globals OK
     require users to provide contact details before reservation OK
 
-test app
-deploy app
+test app OK
+deploy app OK
