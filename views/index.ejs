@@ -26,4 +26,10 @@
     </div>
 </div>
 <br>
+<script>
+    // var carousel = M.Carousel.init(document.querySelectorAll('.carousel'), {fullWidth: true,indicators:true});
+    var timer = setInterval(function () {
+        document.querySelectorAll('.carousel')[0].M_Carousel.next();
+    }, 2500);
+</script>
 <% include ./partials/footer.ejs %>

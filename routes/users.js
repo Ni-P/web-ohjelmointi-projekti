@@ -177,7 +177,6 @@ router.post('/login', passport.authenticate('local',
         successRedirect: '/cottages',
         failureRedirect: '/users/login'
     }), function(req, res) {
-
 });
 
 router.get('/logout', function(req, res) {
