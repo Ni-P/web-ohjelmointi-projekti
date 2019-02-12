@@ -55,6 +55,10 @@ nav {
     font-size: 3rem;
 }
 
+.text-underline {
+    text-underline: #FFFFFF;
+}
+
 @media only screen and (min-width: 993px ){
     /*body {*/
         /*font-size: 14px;*/
